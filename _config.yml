@@ -1,10 +1,8 @@
-title: Your awesome title
-author: GitHub User
-email: your-email@domain.com
+title: 전남고등학교 학생회 블로그
+author: LeeWonchan
+email: wonchan@wonchan.net
 description: > # this means to ignore newlines until "show_exerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  전남고등학교 학생회 공식 블로그 입니다.
 show_excerpts: true # set to true to show excerpts on the homepage
 
 # Minima date format
@@ -13,7 +11,7 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: 전남고등학교 학생회
-  tagline: School, Blog
+  tagline: 전남고등학교 학생회 블로그
   date_format: "%b %-d, %Y"
   sitemap: true # set to true to generate sitemap.xml content
   search: true # set to true to enable searchbar
