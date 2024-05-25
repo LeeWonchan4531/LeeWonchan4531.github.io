@@ -1,39 +1,49 @@
-<footer class="footer">
-  <div class="footer-column">
-    <p>
-      <small>
-        &copy;&nbsp;
-        {%- assign date_from = site.posts[-1].date | date_to_xmlschema -%}
-        {%- assign year_from = date_from | date: '%Y' -%}
-        {%- assign date_to   = site.time | date_to_xmlschema -%}
-        {%- assign year_to   = date_to | date: '%Y' -%}
-        {%- unless year_from == nil or year_from == year_to -%}
-          <time datetime="{{ date_from }}">{{ year_from }}</time>-
-        {%- endunless -%}
-        <time datetime="{{ date_to }}">{{ year_to }}</time>
-        {%- if site.author -%}
-          &nbsp;<a href="{{ site.author.url }}" target="_blank">{{ site.author.name }}</a>
-        {%- endif -%}
-        . All right reserved.
-      </small>
-    </p>
-    <p>
-      <small>
-        Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> & <a href="https://github.com/zivhub/monophase" target="_blank">Monophase</a>
-      </small>
-    </p>
-  </div>
-  {% if site.data.social %}
-    <div class="footer-column">
-      <ul class="social-icons">
-        {% for social in site.data.social %}
-          <li class="social-icon-item">
-            <a class="social-icon" href="{{ social.url }}" target="_blank">
-              <i class="{{ social.icon | default: 'fas fa-link' }}" title="{{ social.title }}"></i>
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+<!-- The Footer -->
+
+<footer
+  aria-label="Site Info"
+  class="
+    d-flex flex-column justify-content-center text-muted
+    flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3
+  "
+>
+  <p>
+    {{- '©' }}
+    <time>{{ 'now' | date: '%Y' }}</time>
+
+    {% if site.social.links %}
+      <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>.
+    {% else %}
+      <em class="fst-normal">{{ site.social.name }}</em>.
+    {% endif %}
+
+    {% if site.data.locales[include.lang].copyright.brief %}
+      <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="{{ site.data.locales[include.lang].copyright.verbose }}"
+      >
+        {{- site.data.locales[include.lang].copyright.brief -}}
+      </span>
+    {% endif %}
+  </p>
+
+  <p>
+    {%- capture _platform -%}
+      <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>
+    {%- endcapture -%}
+
+    {%- capture _theme -%}
+      <a
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="v{{ theme.version }}"
+        href="https://github.com/cotes2020/jekyll-theme-chirpy"
+        target="_blank"
+        rel="noopener"
+      >Chirpy</a>
+    {%- endcapture -%}
+
+    {{ site.data.locales[include.lang].meta | replace: ':PLATFORM', _platform | replace: ':THEME', _theme }}
+  </p>
 </footer>
