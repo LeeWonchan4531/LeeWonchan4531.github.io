@@ -38,6 +38,8 @@ AI 지문 요약 기능은 Google의 Gemini 기술을 기반으로 합니다. �
 
 ![poster](https://img.jeonnam.school/edf7f6d2d077c268039e517b5c5df57a4ae6e4d78ebacc66c6d6870b8dcb92dc.png)
 ![poster](https://img.jeonnam.school/fcba6675ee17a7e38e411092ac2174be3c18d5e1afd23b3c5671757c21ccee8e.png)
+![poster](https://img.jeonnam.school/a581c5e464f8fbab2360b6629e187e450e07d2ff061be67494fbba0d68ecb3a1.png)
+![poster](https://img.jeonnam.school/a4d8e02855a3b39c0e00bd763030b9c17ab8dc28129ed6d898dba69f3e9092f8.png)
 
 
 
