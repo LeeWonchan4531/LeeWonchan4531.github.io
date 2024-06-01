@@ -6,7 +6,7 @@ categories: Tech
 ---
 안녕하세요 전남고등학교 학생회입니다.
 
-이번 글에서는 전남고 LMS Server Architecture에대해 이야기해보도록 하겠습니다. 전남고 LMS는 다양한 서버 아키텍처를 혼합하여 사용하고 있는데요. 
+이번 글에서는 전남고 LMS Server Architecture에 대해 이야기해보도록 하겠습니다. 전남고 LMS는 다양한 서버 아키텍처를 혼합하여 사용하고 있는데요. 
 
 # Server Architecture
 
