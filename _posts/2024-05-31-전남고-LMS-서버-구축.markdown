@@ -1,0 +1,83 @@
+---
+layout: post
+title:  "전남고 LMS 서버 구축"
+date:   2024-05-31 23:03:36 +0530
+categories: Tech
+---
+![poster](https://img.jeonnam.school/edf7f6d2d077c268039e517b5c5df57a4ae6e4d78ebacc66c6d6870b8dcb92dc.png)
+
+안녕하세요 전남고등학교 학생회입니다.
+
+이번 글에서는 전남고 LMS Server Architecture에대해 이야기해보도록 하겠습니다. 전남고 LMS는 다양한 서버 아키텍처를 혼합하여 사용하고 있는데요. 
+
+# Server Architecture
+
+![poster](https://img.jeonnam.school/bf920ebfe4fc917101280f531812148bddfdfc263ffb61878e48e991aa64ac47.png)
+
+
+학교 네트워크 특성상 외부 포트 오픈이 안되는 환경이라 서버 아키텍처가 복잡해졌습니다. 
+서버 아키텍처는 아래 사진과 같이 N-tier 아키텍처를 중심적으로 사용하되, 클라우드 기반 아키텍처도 일부분 사용하고 있습니다.
+
+학교 네트워크는 포트포워딩이 안되는  환경이라 클라우드에서 VM을 생성한 후 tailscale을 이용해 학교에 있는 Proxy Server와 연결시켰습니다. 
+
+# VM 설정
+
+## Nginx Proxy Manager Plus 설치
+
+한대의 서버에 여러개의 도메인이 연결되어있고, 여러 웹사이트를 운영 및 관리를 해야 되었기 때문에 비교적 GUI로 관리가 쉬운 Nginx Proxy Manager Plus를 채택하였습니다. Nginx Proxy Manager를 사용 할 수 도 있었겠지만 Nginx Proxy Manager Plus에 있는 웹 방화벽과 HTTP/3 기능이 너무 탐스러워(?) Nginx Proxy Manager Plus 선택하였습니다.
+
+docker-compose.yml
+```
+  GNU nano 6.2                                              docker-compose.yml                                                        
+version: "3"
+services:
+  npmplus:
+    container_name: npmplus
+    image: zoeyvid/npmplus
+    restart: always
+    network_mode: host
+    volumes:
+      - "./data:/data"
+#      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
+#      - "/opt/npm-letsencrypt:/etc/letsencrypt" # Only needed for first time migration from original nginx-proxy-manager to this fork    environment:
+      - "TZ=Asia/Seoul" # set timezone, required
+#      - "PUID=1000" # set group id, default 0 (root)
+#      - "PGID=1000" # set user id, default 0 (root)
+#      - "NIBEP=48694" # internal port, always bound to 127.0.0.1, default 48693, you need to change it, if you want to run multiple >#      - "NPM_PORT=82" # Port the NPM backend should be bound to, default 81, you need to change it, if you want to run multiple npm >
+#      - "IPV4_BINDING=127.0.0.1" # IPv4 address to bind, defaults to all
+#      - "NPM_IPV4_BINDING=127.0.0.1" # IPv4 address to bind for the NPM backend, defaults to all
+#      - "IPV6_BINDING=[::1]" # IPv6 address to bind, defaults to all
+#      - "NPM_IPV6_BINDING=[::1]" # IPv6 address to bind for the NPM backend, defaults to all
+#      - "DISABLE_IPV6=true" # disable IPv6, overrides with IPV6_BINDING, default false
+#      - "NPM_DISABLE_IPV6=true" # disable IPv6 for the NPM backend, overrides with NPM_IPV6_BINDING, default false, overrides NPM_LI>#      - "NPM_LISTEN_LOCALHOST=true" # Bind the NPM Dashboard on Port 81 only to localhost, overrides with NPM_IPV4_BINDING/NPM_IPV6_>
+#      - "NPM_CERT_ID=1" # ID of cert, which should be used instead of dummycerts, default 0/unset/dummycerts
+#      - "DISABLE_HTTP=true" # disables nginx to listen on port 80, default false
+#      - "NGINX_LOG_NOT_FOUND=true" # Allow logging of 404 errors, default false
+#      - "CLEAN=false" # Clean folders, default true
+#      - "FULLCLEAN=true" # Clean unused config folders, default false
+#      - "PHP81=true" # Activate PHP81, default false
+#      - "PHP81_APKS=php81-curl php-81-curl" # Add php extensions, see available packages here: https://pkgs.alpinelinux.org/packages>
+#      - "PHP82=true" # Activate PHP82, default false
+#      - "PHP82_APKS=php82-curl php-82-curl" # Add php extensions, see available packages here: https://pkgs.alpinelinux.org/packages>
+
+```
+## DB 권한 문제 발생
+위 도커 파일로 설치를 하였고 여기로 아마 바로 실행이 안될겁니다.
+
+DB 데이터가 저장되는 폴더를 NPM 유저로 바꿔주시면 해결이됩니다!
+
+## 왜 Docker를 Proxy 서버에 설치했는가?
+
+가장 중요한 WAS에 설치하려고 했으나, 
+```
+sudo dnf update
+```
+위 명령어를 이용한 서버 업데이트를 한 후 도커가 시작이 안되는 경험이 있어 그나마 위험부담이 적은 Proxy 서버에 설치하였습니다.
+
+Proxy 서버에 장애가 발생하여도, WAS에 즉시 tailscale를 설치하여 클라우드 환경에 있는 VM과 연결하여 서비스를 유지 할 수 있습니다.
+
+<hr>
+
+전남고 LMS를 서버를 구축하는 것을 정리하였습니다.
+
+다음 글을 서버를 구축하는 동안 발생한 문제에 대해 이야기 해보겠습니다.
