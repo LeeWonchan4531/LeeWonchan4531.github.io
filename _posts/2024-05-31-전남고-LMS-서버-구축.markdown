@@ -28,7 +28,6 @@ categories: Tech
 
 docker-compose.yml
 ```
-  GNU nano 6.2                                              docker-compose.yml                                                        
 version: "3"
 services:
   npmplus:
