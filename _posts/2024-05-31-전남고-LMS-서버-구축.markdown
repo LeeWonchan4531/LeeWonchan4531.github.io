@@ -13,16 +13,16 @@ categories: Tech
 ![poster](https://img.jeonnam.school/bf920ebfe4fc917101280f531812148bddfdfc263ffb61878e48e991aa64ac47.png)
 
 
-학교 네트워크 특성상 외부 포트 오픈이 안되는 환경이라 서버 아키텍처가 복잡해졌습니다. 
+학교 네트워크 특성상 외부 포트 오픈이 안 되는 환경이라 서버 아키텍처가 복잡해졌습니다. 
 서버 아키텍처는 아래 사진과 같이 N-tier 아키텍처를 중심적으로 사용하되, 클라우드 기반 아키텍처도 일부분 사용하고 있습니다.
 
-학교 네트워크는 포트포워딩이 안되는  환경이라 클라우드에서 VM을 생성한 후 tailscale을 이용해 학교에 있는 Proxy Server와 연결시켰습니다. 
+학교 네트워크는 포트 포워딩이 안되는 환경이라 클라우드에서 VM을 생성한 후 tailscale을 이용해 학교에 있는 Proxy Server와 연결했습니다.
 
 # VM 설정
 
 ## Nginx Proxy Manager Plus 설치
 
-한대의 서버에 여러개의 도메인이 연결되어있고, 여러 웹사이트를 운영 및 관리를 해야 되었기 때문에 비교적 GUI로 관리가 쉬운 Nginx Proxy Manager Plus를 채택하였습니다. Nginx Proxy Manager를 사용 할 수 도 있었겠지만 Nginx Proxy Manager Plus에 있는 웹 방화벽과 HTTP/3 기능이 너무 탐스러워(?) Nginx Proxy Manager Plus 선택하였습니다.
+한 대의 서버에 여러 개의 도메인이 연결되어 있고, 여러 웹사이트를 운영 및 관리를 해야 했기 때문에 비교적 GUI로 관리가 쉬운 Nginx Proxy Manager Plus를 채택하였습니다. Nginx Proxy Manager를 사용할 수도 있었겠지만 Nginx Proxy Manager Plus에 있는 웹 방화벽과 HTTP/3 기능이 너무 탐스러워(?) Nginx Proxy Manager Plus 선택하였습니다.
 
 docker-compose.yml
 ```
@@ -59,7 +59,7 @@ services:
 
 ```
 ## DB 권한 문제 발생
-위 도커 파일로 설치를 하였고 여기로 아마 바로 실행이 안될겁니다.
+위 도커 파일로 설치하였고 여기로 아마 바로 실행이 안 될 겁니다.
 
 DB 데이터가 저장되는 폴더를 NPM 유저로 바꿔주시면 해결이됩니다!
 
